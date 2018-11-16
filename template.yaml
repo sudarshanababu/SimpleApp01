@@ -215,6 +215,21 @@ Resources:
       TableName: !Sub ${AWS::StackName}-table6E08C5D
     Metadata:
       StackeryName: Users
+  api68EF14EB:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub
+        - ${ResourceName} From Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName}
+        - ResourceName: api68EF14EB
+      StageName: !Ref StackeryEnvironmentAPIGatewayStageName
+      DefinitionBody:
+        swagger: '2.0'
+        info: {}
+        paths:
+          /:
+            get:
+              responses: {}
+      EndpointConfiguration: REGIONAL
 Parameters:
   StackeryStackTagName:
     Type: String
