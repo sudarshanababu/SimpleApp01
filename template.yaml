@@ -267,8 +267,8 @@ Resources:
       FunctionName: !Sub ${AWS::StackName}-function801038DE
       Description: !Sub
         - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
-        - ResourceName: function801038DE
-      CodeUri: src/function801038DE
+        - ResourceName: getBusiness
+      CodeUri: src/getbusiness
       Handler: index.handler
       Runtime: nodejs8.10
       MemorySize: 3008
@@ -289,14 +289,16 @@ Resources:
         Variables:
           TABLE_NAME: !Ref table4E4EFC0B
           TABLE_ARN: !GetAtt table4E4EFC0B.Arn
+    Metadata:
+      StackeryName: getBusiness
   function63B2F8C8:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Sub ${AWS::StackName}-function63B2F8C8
       Description: !Sub
         - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
-        - ResourceName: function63B2F8C8
-      CodeUri: src/function63B2F8C8
+        - ResourceName: deleteBusiness
+      CodeUri: src/deletebusiness
       Handler: index.handler
       Runtime: nodejs8.10
       MemorySize: 3008
@@ -317,14 +319,16 @@ Resources:
         Variables:
           TABLE_NAME: !Ref table4E4EFC0B
           TABLE_ARN: !GetAtt table4E4EFC0B.Arn
+    Metadata:
+      StackeryName: deleteBusiness
   functionC68CA875:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Sub ${AWS::StackName}-functionC68CA875
       Description: !Sub
         - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
-        - ResourceName: functionC68CA875
-      CodeUri: src/functionC68CA875
+        - ResourceName: listBusinesses
+      CodeUri: src/listbusinesses
       Handler: index.handler
       Runtime: nodejs8.10
       MemorySize: 3008
@@ -345,14 +349,16 @@ Resources:
         Variables:
           TABLE_NAME: !Ref table4E4EFC0B
           TABLE_ARN: !GetAtt table4E4EFC0B.Arn
+    Metadata:
+      StackeryName: listBusinesses
   function85CFB14:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Sub ${AWS::StackName}-function85CFB14
       Description: !Sub
         - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
-        - ResourceName: function85CFB14
-      CodeUri: src/function85CFB14
+        - ResourceName: updateBusiness
+      CodeUri: src/updatebusiness
       Handler: index.handler
       Runtime: nodejs8.10
       MemorySize: 3008
@@ -373,14 +379,16 @@ Resources:
         Variables:
           TABLE_NAME: !Ref table4E4EFC0B
           TABLE_ARN: !GetAtt table4E4EFC0B.Arn
+    Metadata:
+      StackeryName: updateBusiness
   function6B736923:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Sub ${AWS::StackName}-function6B736923
       Description: !Sub
         - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
-        - ResourceName: function6B736923
-      CodeUri: src/function6B736923
+        - ResourceName: createBusiness
+      CodeUri: src/createbusiness
       Handler: index.handler
       Runtime: nodejs8.10
       MemorySize: 3008
@@ -401,6 +409,8 @@ Resources:
         Variables:
           TABLE_NAME: !Ref table4E4EFC0B
           TABLE_ARN: !GetAtt table4E4EFC0B.Arn
+    Metadata:
+      StackeryName: createBusiness
   table4E4EFC0B:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -417,7 +427,7 @@ Resources:
         StreamViewType: NEW_AND_OLD_IMAGES
       TableName: !Sub ${AWS::StackName}-table4E4EFC0B
     Metadata:
-      StackeryName: businesses
+      StackeryName: Businesses
 Parameters:
   StackeryStackTagName:
     Type: String
