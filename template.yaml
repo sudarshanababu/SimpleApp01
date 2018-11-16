@@ -358,7 +358,7 @@ Resources:
       Description: !Sub
         - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
         - ResourceName: updateBusiness
-      CodeUri: src/updatebusiness
+      CodeUri: src/business
       Handler: index.handler
       Runtime: nodejs8.10
       MemorySize: 3008
@@ -388,7 +388,7 @@ Resources:
       Description: !Sub
         - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
         - ResourceName: createBusiness
-      CodeUri: src/createbusiness
+      CodeUri: src/business
       Handler: index.handler
       Runtime: nodejs8.10
       MemorySize: 3008
