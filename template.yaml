@@ -73,7 +73,7 @@ Resources:
               x-amazon-apigateway-integration:
                 httpMethod: POST
                 type: aws_proxy
-                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${function5A53E646.Arn}/invocations
+                ubri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${function5A53E646.Arn}/invocations
               responses: {}
       EndpointConfiguration: REGIONAL
     Metadata:
@@ -428,6 +428,110 @@ Resources:
       TableName: !Sub ${AWS::StackName}-table4E4EFC0B
     Metadata:
       StackeryName: Businesses
+  apiD96AB973:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub
+        - ${ResourceName} From Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName}
+        - ResourceName: Orders
+      StageName: !Ref StackeryEnvironmentAPIGatewayStageName
+      DefinitionBody:
+        swagger: '2.0'
+        info: {}
+        paths:
+          /orders:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${function29057F9B.Arn}/invocations
+              responses: {}
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${function3B13D766.Arn}/invocations
+              responses: {}
+      EndpointConfiguration: REGIONAL
+    Metadata:
+      StackeryName: Orders
+  function29057F9B:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-function29057F9B
+      Description: !Sub
+        - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
+        - ResourceName: listOrders
+      CodeUri: src/orders
+      Handler: listOrders.handler
+      Runtime: nodejs8.10
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref table792DD385
+      Events:
+        apiD96AB973:
+          Type: Api
+          Properties:
+            Path: /orders
+            Method: GET
+            RestApiId: !Ref apiD96AB973
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref table792DD385
+          TABLE_ARN: !GetAtt table792DD385.Arn
+    Metadata:
+      StackeryName: listOrders
+  function3B13D766:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-function3B13D766
+      Description: !Sub
+        - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
+        - ResourceName: createOrder
+      CodeUri: src/orders
+      Handler: createOrder.handler
+      Runtime: nodejs8.10
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref table792DD385
+      Events:
+        apiD96AB973:
+          Type: Api
+          Properties:
+            Path: /orders
+            Method: POST
+            RestApiId: !Ref apiD96AB973
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref table792DD385
+          TABLE_ARN: !GetAtt table792DD385.Arn
+    Metadata:
+      StackeryName: createOrder
+  table792DD385:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      TableName: !Sub ${AWS::StackName}-table792DD385
+    Metadata:
+      StackeryName: Orders
 Parameters:
   StackeryStackTagName:
     Type: String
