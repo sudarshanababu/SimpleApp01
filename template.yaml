@@ -220,16 +220,204 @@ Resources:
     Properties:
       Name: !Sub
         - ${ResourceName} From Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName}
-        - ResourceName: api68EF14EB
+        - ResourceName: business
       StageName: !Ref StackeryEnvironmentAPIGatewayStageName
       DefinitionBody:
         swagger: '2.0'
         info: {}
         paths:
-          /:
+          /businesses:
             get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${functionC68CA875.Arn}/invocations
+              responses: {}
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${function6B736923.Arn}/invocations
+              responses: {}
+          /businesses/{name}:
+            put:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${function85CFB14.Arn}/invocations
+              responses: {}
+            delete:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${function63B2F8C8.Arn}/invocations
+              responses: {}
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${function801038DE.Arn}/invocations
               responses: {}
       EndpointConfiguration: REGIONAL
+    Metadata:
+      StackeryName: business
+  function801038DE:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-function801038DE
+      Description: !Sub
+        - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
+        - ResourceName: function801038DE
+      CodeUri: src/function801038DE
+      Handler: index.handler
+      Runtime: nodejs8.10
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref table4E4EFC0B
+      Events:
+        api68EF14EB:
+          Type: Api
+          Properties:
+            Path: /businesses/{name}
+            Method: GET
+            RestApiId: !Ref api68EF14EB
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref table4E4EFC0B
+          TABLE_ARN: !GetAtt table4E4EFC0B.Arn
+  function63B2F8C8:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-function63B2F8C8
+      Description: !Sub
+        - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
+        - ResourceName: function63B2F8C8
+      CodeUri: src/function63B2F8C8
+      Handler: index.handler
+      Runtime: nodejs8.10
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref table4E4EFC0B
+      Events:
+        api68EF14EB:
+          Type: Api
+          Properties:
+            Path: /businesses/{name}
+            Method: DELETE
+            RestApiId: !Ref api68EF14EB
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref table4E4EFC0B
+          TABLE_ARN: !GetAtt table4E4EFC0B.Arn
+  functionC68CA875:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-functionC68CA875
+      Description: !Sub
+        - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
+        - ResourceName: functionC68CA875
+      CodeUri: src/functionC68CA875
+      Handler: index.handler
+      Runtime: nodejs8.10
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref table4E4EFC0B
+      Events:
+        api68EF14EB:
+          Type: Api
+          Properties:
+            Path: /businesses
+            Method: GET
+            RestApiId: !Ref api68EF14EB
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref table4E4EFC0B
+          TABLE_ARN: !GetAtt table4E4EFC0B.Arn
+  function85CFB14:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-function85CFB14
+      Description: !Sub
+        - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
+        - ResourceName: function85CFB14
+      CodeUri: src/function85CFB14
+      Handler: index.handler
+      Runtime: nodejs8.10
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref table4E4EFC0B
+      Events:
+        api68EF14EB:
+          Type: Api
+          Properties:
+            Path: /businesses/{name}
+            Method: PUT
+            RestApiId: !Ref api68EF14EB
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref table4E4EFC0B
+          TABLE_ARN: !GetAtt table4E4EFC0B.Arn
+  function6B736923:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-function6B736923
+      Description: !Sub
+        - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
+        - ResourceName: function6B736923
+      CodeUri: src/function6B736923
+      Handler: index.handler
+      Runtime: nodejs8.10
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref table4E4EFC0B
+      Events:
+        api68EF14EB:
+          Type: Api
+          Properties:
+            Path: /businesses
+            Method: POST
+            RestApiId: !Ref api68EF14EB
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref table4E4EFC0B
+          TABLE_ARN: !GetAtt table4E4EFC0B.Arn
+  table4E4EFC0B:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: name
+          AttributeType: S
+      KeySchema:
+        - AttributeName: name
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      TableName: !Sub ${AWS::StackName}-table4E4EFC0B
+    Metadata:
+      StackeryName: businesses
 Parameters:
   StackeryStackTagName:
     Type: String
